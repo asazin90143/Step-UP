@@ -38,6 +38,13 @@ export default function Home() {
     }
   };
 
+  const handleScrollToContact = () => {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <main className="min-h-screen bg-white">
       {/* Hero Section */}
@@ -70,7 +77,10 @@ export default function Home() {
                 <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
               </svg>
             </button>
-            <button className="px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/40 text-white rounded-full font-bold transition">
+            <button
+              onClick={handleScrollToContact}
+              className="px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/40 text-white rounded-full font-bold transition"
+            >
               Learn More
             </button>
           </div>
@@ -112,8 +122,8 @@ export default function Home() {
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
                 className={`px-5 py-2 rounded-full text-sm font-bold transition-all ${selectedCategory === cat
-                    ? 'bg-emerald-600 text-white shadow-md transform scale-105'
-                    : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-100 hover:border-gray-300'
+                  ? 'bg-emerald-600 text-white shadow-md transform scale-105'
+                  : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-100 hover:border-gray-300'
                   }`}
               >
                 {cat}
@@ -170,6 +180,52 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Contact Section */}
+      <section id="contact" className="py-20 bg-emerald-900 text-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Get in Touch</h2>
+            <p className="text-emerald-100 max-w-xl mx-auto">Have questions about sizing, materials, or shipping? We're here to help you step up.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <div className="bg-white/5 backdrop-blur-sm p-8 rounded-2xl border border-white/10 hover:bg-white/10 transition text-center">
+              <div className="bg-emerald-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold mb-2">Email Us</h3>
+              <p className="text-emerald-100 mb-4">For general inquiries</p>
+              <a href="mailto:hello@stepup.com" className="text-white font-semibold hover:text-emerald-400">hello@stepup.com</a>
+            </div>
+
+            <div className="bg-white/5 backdrop-blur-sm p-8 rounded-2xl border border-white/10 hover:bg-white/10 transition text-center">
+              <div className="bg-emerald-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold mb-2">Call Us</h3>
+              <p className="text-emerald-100 mb-4">Mon-Fri, 9am - 6pm</p>
+              <a href="tel:+15551234567" className="text-white font-semibold hover:text-emerald-400">+1 (555) 123-4567</a>
+            </div>
+
+            <div className="bg-white/5 backdrop-blur-sm p-8 rounded-2xl border border-white/10 hover:bg-white/10 transition text-center">
+              <div className="bg-emerald-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold mb-2">Visit Us</h3>
+              <p className="text-emerald-100 mb-4">Come say hello</p>
+              <address className="text-white font-semibold not-italic">123 Sneaker St, NYC</address>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Newsletter Section */}
       <section className="bg-gray-900 text-white py-20">
         <div className="container mx-auto px-4 text-center">
@@ -221,8 +277,8 @@ export default function Home() {
                     key={size}
                     onClick={() => setSelectedSize(size)}
                     className={`py-3 rounded-lg text-sm font-bold border transition-all ${selectedSize === size
-                        ? 'border-emerald-600 bg-emerald-600 text-white shadow-md transform scale-105'
-                        : 'border-gray-200 text-gray-700 hover:border-emerald-500 hover:text-emerald-600'
+                      ? 'border-emerald-600 bg-emerald-600 text-white shadow-md transform scale-105'
+                      : 'border-gray-200 text-gray-700 hover:border-emerald-500 hover:text-emerald-600'
                       }`}
                   >
                     {size}
@@ -236,8 +292,8 @@ export default function Home() {
                   onClick={handleAddToCart}
                   disabled={!selectedSize}
                   className={`px-8 py-3 rounded-xl font-bold flex items-center gap-2 transition-all ${selectedSize
-                      ? 'bg-black text-white hover:bg-emerald-600 shadow-lg transform active:scale-95'
-                      : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                    ? 'bg-black text-white hover:bg-emerald-600 shadow-lg transform active:scale-95'
+                    : 'bg-gray-200 text-gray-400 cursor-not-allowed'
                     }`}
                 >
                   Add to Cart
