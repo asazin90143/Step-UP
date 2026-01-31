@@ -30,7 +30,7 @@ export default function CartPage() {
     return (
         <div className="min-h-screen bg-gray-50 p-8">
             <div className="container mx-auto max-w-4xl">
-                <h1 className="text-3xl font-bold mb-8">Shopping Cart</h1>
+                <h1 className="text-3xl font-bold mb-8 text-gray-900">Shopping Cart</h1>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     {/* Cart Items List */}
@@ -44,11 +44,11 @@ export default function CartPage() {
                                     <p className="font-bold text-emerald-600">${item.price}</p>
                                 </div>
                                 <div className="flex items-center gap-3">
-                                    <button onClick={() => updateQuantity(item.id, -1)} className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200">-</button>
-                                    <span className="font-medium">{item.quantity}</span>
-                                    <button onClick={() => updateQuantity(item.id, 1)} className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200">+</button>
+                                    <button onClick={() => updateQuantity(item.id, item.size, -1)} className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold">-</button>
+                                    <span className="font-medium text-gray-900">{item.quantity}</span>
+                                    <button onClick={() => updateQuantity(item.id, item.size, 1)} className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold">+</button>
                                 </div>
-                                <button onClick={() => removeFromCart(item.id)} className="text-red-500 hover:text-red-700 ml-4">
+                                <button onClick={() => removeFromCart(item.id, item.size)} className="text-red-500 hover:text-red-700 ml-4">
                                     ✕
                                 </button>
                             </div>
@@ -56,7 +56,7 @@ export default function CartPage() {
                     </div>
 
                     {/* Checkout Summary */}
-                    <div className="bg-white p-6 rounded-lg shadow-sm h-fit">
+                    <div className="bg-white p-6 rounded-lg shadow-sm h-fit text-gray-900">
                         <h2 className="text-xl font-bold mb-4">Order Summary</h2>
                         <div className="flex justify-between mb-2">
                             <span>Subtotal</span>

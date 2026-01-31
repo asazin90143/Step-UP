@@ -10,7 +10,7 @@ export default function Navbar() {
     return (
         <nav className="bg-white border-b border-gray-100 shadow-sm sticky top-0 z-50">
             <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-                <Link href="/" className="text-xl font-bold tracking-tight">
+                <Link href="/" className="text-xl font-bold tracking-tight text-gray-900">
                     STEP<span className="text-emerald-600">UP</span>
                 </Link>
                 <Link href="/cart" className="relative p-2 hover:bg-gray-100 rounded-full transition">
