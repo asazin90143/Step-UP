@@ -128,7 +128,7 @@ export default function Home() {
                 <div className="relative z-10 flex justify-center">
                   <div className="w-72 h-72 md:w-80 md:h-80 rounded-full bg-gradient-to-br from-gray-800 to-gray-900 border border-white/10 shadow-2xl overflow-hidden flex items-center justify-center hover:scale-105 transition-transform duration-500">
                     <img
-                      src={shoes[0]?.image || '/shoes/sneakers/image250.jpg'}
+                      src={shoes[53]?.image || '/shoes/sneakers/image253.jpg'}
                       alt="Featured Shoe"
                       className="w-full h-full object-cover"
                     />
