@@ -11,11 +11,11 @@ export default function Home() {
   const [selectedShoe, setSelectedShoe] = useState<Shoe | null>(null);
   const [selectedSize, setSelectedSize] = useState<string | number | null>(null);
 
-  const categories = ['All', ...new Set(shoes.map((shoe) => shoe.category))];
+  const categories = ['All', ...[...new Set(shoes.map((shoe) => shoe.category))].sort()];
   const sizes = [7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 12, 13];
 
   const filteredShoes = selectedCategory === 'All'
-    ? shoes
+    ? [...shoes].sort((a, b) => a.name.localeCompare(b.name))
     : shoes.filter((shoe) => shoe.category === selectedCategory);
 
   const handleScrollToShop = () => {
@@ -49,41 +49,125 @@ export default function Home() {
     <main className="min-h-screen bg-white">
       {/* Hero Section */}
       <section className="relative bg-gray-900 text-white overflow-hidden">
-        <div className="absolute inset-0 z-0 opacity-60 bg-black">
-          <img
-            src="https://images.unsplash.com/photo-1556906781-9a412961d289?auto=format&fit=crop&w=1920&q=80"
-            alt="Sneaker background"
-            className="w-full h-full object-cover mix-blend-overlay"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent"></div>
+        {/* Animated gradient background */}
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-emerald-900"></div>
+          <div className="absolute top-0 left-0 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 animate-pulse"></div>
+          <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-emerald-600/10 rounded-full blur-3xl translate-x-1/3 translate-y-1/3"></div>
         </div>
 
-        <div className="container mx-auto px-4 py-24 md:py-32 relative z-10 flex flex-col justify-center h-full min-h-[600px]">
-          <span className="text-emerald-400 font-bold tracking-wider uppercase mb-4 drop-shadow-md">Step Up Your Game</span>
-          <h1 className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight drop-shadow-lg">
-            Walk with <br />
-            <span className="text-emerald-500">Confidence</span>
-          </h1>
-          <p className="text-gray-100 text-lg md:text-xl max-w-lg mb-8 leading-relaxed drop-shadow-md font-medium">
-            Discover our premium collection of footwear designed for comfort and style. No heels, just pure performance.
-          </p>
-          <div className="flex gap-4">
-            <button
-              onClick={handleScrollToShop}
-              className="px-8 py-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full font-bold transition transform hover:scale-105 shadow-lg flex items-center gap-2"
-            >
-              Shop Now
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
-              </svg>
-            </button>
-            <button
-              onClick={handleScrollToContact}
-              className="px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/40 text-white rounded-full font-bold transition"
-            >
-              Learn More
-            </button>
+        {/* Decorative grid pattern */}
+        <div className="absolute inset-0 z-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle, #10b981 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
+
+        <div className="container mx-auto px-4 py-20 md:py-28 relative z-10">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            {/* Left side - Text content */}
+            <div className="order-2 md:order-1">
+              <div className="inline-flex items-center gap-2 bg-emerald-500/20 border border-emerald-500/30 rounded-full px-4 py-2 mb-6">
+                <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
+                <span className="text-emerald-400 font-medium text-sm tracking-wide uppercase">New Collection 2026</span>
+              </div>
+
+              <h1 className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
+                Walk with <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">Confidence</span>
+              </h1>
+
+              <p className="text-gray-300 text-lg md:text-xl max-w-lg mb-8 leading-relaxed">
+                Discover our premium collection of footwear designed for comfort and style. No heels, just pure performance.
+              </p>
+
+              <div className="flex flex-wrap gap-4 mb-12">
+                <button
+                  onClick={handleScrollToShop}
+                  className="group px-8 py-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-full font-bold transition-all duration-300 shadow-lg shadow-emerald-600/30 hover:shadow-emerald-500/40 hover:shadow-xl flex items-center gap-2"
+                >
+                  Shop Now
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 group-hover:translate-x-1 transition-transform" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </button>
+                <button
+                  onClick={handleScrollToContact}
+                  className="px-8 py-4 bg-white/5 hover:bg-white/10 backdrop-blur-sm border border-white/20 hover:border-white/40 text-white rounded-full font-bold transition-all duration-300"
+                >
+                  Learn More
+                </button>
+              </div>
+
+              {/* Trust badges */}
+              <div className="flex items-center gap-6 text-gray-400 text-sm">
+                <div className="flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Free Shipping
+                </div>
+                <div className="flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  30-Day Returns
+                </div>
+              </div>
+            </div>
+
+            {/* Right side - Featured shoe showcase */}
+            <div className="order-1 md:order-2 relative">
+              {/* Main showcase */}
+              <div className="relative">
+                {/* Glow effect behind shoe */}
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/30 to-teal-500/20 rounded-full blur-3xl scale-75"></div>
+
+                {/* Rotating ring */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-80 h-80 md:w-96 md:h-96 border-2 border-dashed border-emerald-500/30 rounded-full animate-spin" style={{ animationDuration: '20s' }}></div>
+                </div>
+
+                {/* Main featured shoe */}
+                <div className="relative z-10 flex justify-center">
+                  <div className="w-72 h-72 md:w-80 md:h-80 rounded-full bg-gradient-to-br from-gray-800 to-gray-900 border border-white/10 shadow-2xl overflow-hidden flex items-center justify-center hover:scale-105 transition-transform duration-500">
+                    <img
+                      src={shoes[0]?.image || '/shoes/sneakers/image250.jpg'}
+                      alt="Featured Shoe"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+
+                {/* Floating mini cards */}
+                <div className="absolute -top-4 -right-4 md:top-4 md:right-0 bg-white/10 backdrop-blur-md rounded-2xl p-3 border border-white/20 shadow-xl animate-bounce" style={{ animationDuration: '3s' }}>
+                  <div className="flex items-center gap-2">
+                    <div className="w-10 h-10 rounded-lg overflow-hidden">
+                      <img src={shoes[50]?.image || '/shoes/boots/image260.jpg'} alt="" className="w-full h-full object-cover" />
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-300">Just sold!</p>
+                      <p className="text-sm font-bold text-white">Boots</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="absolute -bottom-4 -left-4 md:bottom-8 md:-left-8 bg-emerald-600 rounded-2xl p-4 shadow-xl shadow-emerald-600/30">
+                  <div className="flex items-center gap-3">
+                    <div className="text-3xl font-extrabold text-white">250+</div>
+                    <div className="text-emerald-100 text-xs leading-tight">Products<br />Available</div>
+                  </div>
+                </div>
+
+                {/* Decorative dots */}
+                <div className="absolute top-1/2 -left-8 w-3 h-3 bg-emerald-400 rounded-full animate-ping" style={{ animationDuration: '2s' }}></div>
+                <div className="absolute bottom-20 right-0 w-2 h-2 bg-teal-400 rounded-full animate-ping" style={{ animationDuration: '2.5s' }}></div>
+              </div>
+            </div>
           </div>
+        </div>
+
+        {/* Bottom wave */}
+        <div className="absolute bottom-0 left-0 right-0 z-10">
+          <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
+            <path d="M0 120L60 110C120 100 240 80 360 75C480 70 600 80 720 85C840 90 960 90 1080 85C1200 80 1320 70 1380 65L1440 60V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="#f0fdf4" />
+          </svg>
         </div>
       </section>
 
