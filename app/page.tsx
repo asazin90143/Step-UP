@@ -2,13 +2,17 @@
 import { useState } from 'react';
 import { shoes } from '@/lib/data';
 import { useCart } from '@/context/CartContext';
+import { Shoe } from '@/types';
 import Link from 'next/link';
 
 export default function Home() {
   const { addToCart } = useCart();
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedShoe, setSelectedShoe] = useState<Shoe | null>(null);
+  const [selectedSize, setSelectedSize] = useState<string | number | null>(null);
 
   const categories = ['All', ...new Set(shoes.map((shoe) => shoe.category))];
+  const sizes = [7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 12, 13];
 
   const filteredShoes = selectedCategory === 'All'
     ? shoes
@@ -18,6 +22,19 @@ export default function Home() {
     const shopSection = document.getElementById('shop');
     if (shopSection) {
       shopSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const openSizeModal = (shoe: Shoe) => {
+    setSelectedShoe(shoe);
+    setSelectedSize(null);
+  };
+
+  const handleAddToCart = () => {
+    if (selectedShoe && selectedSize) {
+      addToCart(selectedShoe, selectedSize);
+      setSelectedShoe(null);
+      setSelectedSize(null);
     }
   };
 
@@ -121,7 +138,7 @@ export default function Home() {
                   {/* Quick add overlay */}
                   <div className="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-gradient-to-t from-black/50 to-transparent flex justify-center">
                     <button
-                      onClick={() => addToCart(shoe)}
+                      onClick={() => openSizeModal(shoe)}
                       className="w-full bg-white text-gray-900 py-3 rounded-xl font-bold shadow-lg hover:bg-emerald-500 hover:text-white transition active:scale-95 flex items-center justify-center gap-2"
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -170,6 +187,66 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Size Selection Modal */}
+      {selectedShoe && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden animate-scale-up">
+            <div className="relative h-48 bg-gray-100">
+              <img
+                src={selectedShoe.image}
+                alt={selectedShoe.name}
+                className="w-full h-full object-cover"
+              />
+              <button
+                onClick={() => setSelectedShoe(null)}
+                className="absolute top-3 right-3 bg-white/80 hover:bg-white rounded-full p-2 transition"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            <div className="p-6">
+              <div className="mb-6">
+                <span className="text-emerald-600 text-sm font-bold uppercase tracking-wide">{selectedShoe.category}</span>
+                <h3 className="text-2xl font-bold text-gray-900 mt-1">{selectedShoe.name}</h3>
+                <p className="text-gray-500 mt-2">Select your size to continue.</p>
+              </div>
+
+              <div className="grid grid-cols-4 gap-3 mb-8">
+                {sizes.map((size) => (
+                  <button
+                    key={size}
+                    onClick={() => setSelectedSize(size)}
+                    className={`py-3 rounded-lg text-sm font-bold border transition-all ${selectedSize === size
+                        ? 'border-emerald-600 bg-emerald-600 text-white shadow-md transform scale-105'
+                        : 'border-gray-200 text-gray-700 hover:border-emerald-500 hover:text-emerald-600'
+                      }`}
+                  >
+                    {size}
+                  </button>
+                ))}
+              </div>
+
+              <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                <span className="text-2xl font-extrabold text-gray-900">${selectedShoe.price}</span>
+                <button
+                  onClick={handleAddToCart}
+                  disabled={!selectedSize}
+                  className={`px-8 py-3 rounded-xl font-bold flex items-center gap-2 transition-all ${selectedSize
+                      ? 'bg-black text-white hover:bg-emerald-600 shadow-lg transform active:scale-95'
+                      : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                    }`}
+                >
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

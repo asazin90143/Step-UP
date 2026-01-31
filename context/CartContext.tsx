@@ -5,9 +5,9 @@ import { Shoe, CartItem } from '@/types';
 
 interface CartContextType {
     items: CartItem[];
-    addToCart: (shoe: Shoe) => void;
-    removeFromCart: (id: string) => void;
-    updateQuantity: (id: string, delta: number) => void;
+    addToCart: (shoe: Shoe, size: string | number) => void;
+    removeFromCart: (id: string, size: string | number) => void;
+    updateQuantity: (id: string, size: string | number, delta: number) => void;
     clearCart: () => void;
     total: number;
 }
@@ -28,23 +28,23 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         localStorage.setItem('stepup_cart', JSON.stringify(items));
     }, [items]);
 
-    const addToCart = (shoe: Shoe) => {
+    const addToCart = (shoe: Shoe, size: string | number) => {
         setItems(prev => {
-            const existing = prev.find(item => item.id === shoe.id);
+            const existing = prev.find(item => item.id === shoe.id && item.size === size);
             if (existing) {
-                return prev.map(item => item.id === shoe.id ? { ...item, quantity: item.quantity + 1 } : item);
+                return prev.map(item => (item.id === shoe.id && item.size === size) ? { ...item, quantity: item.quantity + 1 } : item);
             }
-            return [...prev, { ...shoe, quantity: 1 }];
+            return [...prev, { ...shoe, quantity: 1, size }];
         });
     };
 
-    const removeFromCart = (id: string) => {
-        setItems(prev => prev.filter(item => item.id !== id));
+    const removeFromCart = (id: string, size: string | number) => {
+        setItems(prev => prev.filter(item => !(item.id === id && item.size === size)));
     };
 
-    const updateQuantity = (id: string, delta: number) => {
+    const updateQuantity = (id: string, size: string | number, delta: number) => {
         setItems(prev => prev.map(item => {
-            if (item.id === id) {
+            if (item.id === id && item.size === size) {
                 const newQty = Math.max(1, item.quantity + delta);
                 return { ...item, quantity: newQty };
             }

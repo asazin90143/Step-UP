@@ -8,4 +8,5 @@ export interface Shoe {
 
 export interface CartItem extends Shoe {
     quantity: number;
+    size: string | number;
 }
