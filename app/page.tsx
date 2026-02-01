@@ -46,7 +46,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-white dark:bg-gray-950 transition-colors duration-300">
       {/* Hero Section */}
       <section className="relative bg-gray-900 text-white overflow-hidden">
         {/* Animated gradient background */}
@@ -128,9 +128,9 @@ export default function Home() {
                 <div className="relative z-10 flex justify-center">
                   <div className="w-72 h-72 md:w-80 md:h-80 rounded-full bg-gradient-to-br from-gray-800 to-gray-900 border border-white/10 shadow-2xl overflow-hidden flex items-center justify-center hover:scale-105 transition-transform duration-500">
                     <img
-                      src={shoes[53]?.image || '/shoes/sneakers/image253.jpg'}
+                      src={shoes.find(s => s.name === 'Air Pulse')?.image || '/shoes/sneakers/image288.jpg'}
                       alt="Featured Shoe"
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover object-center"
                     />
                   </div>
                 </div>
@@ -190,12 +190,12 @@ export default function Home() {
       </section>
 
       {/* Shop Section */}
-      <section id="shop" className="py-20 bg-gray-50">
+      <section id="shop" className="py-20 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-end mb-8">
             <div>
               <span className="text-emerald-600 font-bold uppercase tracking-wider text-sm">Our Collection</span>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mt-2">Latest Arrivals</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-2">Latest Arrivals</h2>
             </div>
           </div>
 
@@ -207,7 +207,7 @@ export default function Home() {
                 onClick={() => setSelectedCategory(cat)}
                 className={`px-5 py-2 rounded-full text-sm font-bold transition-all ${selectedCategory === cat
                   ? 'bg-emerald-600 text-white shadow-md transform scale-105'
-                  : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-100 hover:border-gray-300'
+                  : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:border-gray-300'
                   }`}
               >
                 {cat}
@@ -217,8 +217,8 @@ export default function Home() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {filteredShoes.map((shoe) => (
-              <div key={shoe.id} className="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 flex flex-col">
-                <div className="h-64 bg-gray-100 relative overflow-hidden">
+              <div key={shoe.id} className="group bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 dark:border-gray-700 flex flex-col">
+                <div className="h-64 bg-gray-100 dark:bg-gray-700 relative overflow-hidden">
                   <div className="absolute top-3 right-3 z-10">
                     <span className="bg-white/90 backdrop-blur text-xs font-bold px-3 py-1 rounded-full text-gray-800 shadow-sm uppercase tracking-wide">
                       {shoe.category}
@@ -244,11 +244,11 @@ export default function Home() {
                 </div>
 
                 <div className="p-5 flex flex-col flex-grow">
-                  <h3 className="font-bold text-lg text-gray-900 mb-1 group-hover:text-emerald-600 transition-colors">{shoe.name}</h3>
-                  <p className="text-gray-500 text-sm mb-4 line-clamp-2">Premium {shoe.category.toLowerCase()} designed for modern life.</p>
+                  <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-1 group-hover:text-emerald-600 transition-colors">{shoe.name}</h3>
+                  <p className="text-gray-500 dark:text-gray-400 text-sm mb-4 line-clamp-2">Premium {shoe.category.toLowerCase()} designed for modern life.</p>
 
-                  <div className="mt-auto flex items-center justify-between border-t border-gray-100 pt-4">
-                    <span className="text-xl font-extrabold text-gray-900">${shoe.price}</span>
+                  <div className="mt-auto flex items-center justify-between border-t border-gray-100 dark:border-gray-700 pt-4">
+                    <span className="text-xl font-extrabold text-gray-900 dark:text-white">${shoe.price}</span>
                     <div className="flex text-yellow-400 text-sm">
                       {[...Array(5)].map((_, i) => (
                         <svg key={i} xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 fill-current" viewBox="0 0 20 20">
@@ -331,8 +331,8 @@ export default function Home() {
       {/* Size Selection Modal */}
       {selectedShoe && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden animate-scale-up">
-            <div className="relative h-48 bg-gray-100">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full overflow-hidden animate-scale-up">
+            <div className="relative h-48 bg-gray-100 dark:bg-gray-900">
               <img
                 src={selectedShoe.image}
                 alt={selectedShoe.name}
@@ -340,7 +340,7 @@ export default function Home() {
               />
               <button
                 onClick={() => setSelectedShoe(null)}
-                className="absolute top-3 right-3 bg-white/80 hover:bg-white rounded-full p-2 transition"
+                className="absolute top-3 right-3 bg-white/80 dark:bg-black/50 hover:bg-white dark:hover:bg-black rounded-full p-2 transition"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -351,8 +351,8 @@ export default function Home() {
             <div className="p-6">
               <div className="mb-6">
                 <span className="text-emerald-600 text-sm font-bold uppercase tracking-wide">{selectedShoe.category}</span>
-                <h3 className="text-2xl font-bold text-gray-900 mt-1">{selectedShoe.name}</h3>
-                <p className="text-gray-500 mt-2">Select your size to continue.</p>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mt-1">{selectedShoe.name}</h3>
+                <p className="text-gray-500 dark:text-gray-400 mt-2">Select your size to continue.</p>
               </div>
 
               <div className="grid grid-cols-4 gap-3 mb-8">
@@ -362,7 +362,7 @@ export default function Home() {
                     onClick={() => setSelectedSize(size)}
                     className={`py-3 rounded-lg text-sm font-bold border transition-all ${selectedSize === size
                       ? 'border-emerald-600 bg-emerald-600 text-white shadow-md transform scale-105'
-                      : 'border-gray-200 text-gray-700 hover:border-emerald-500 hover:text-emerald-600'
+                      : 'border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-emerald-500 hover:text-emerald-600'
                       }`}
                   >
                     {size}
@@ -370,14 +370,14 @@ export default function Home() {
                 ))}
               </div>
 
-              <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                <span className="text-2xl font-extrabold text-gray-900">${selectedShoe.price}</span>
+              <div className="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-700">
+                <span className="text-2xl font-extrabold text-gray-900 dark:text-white">${selectedShoe.price}</span>
                 <button
                   onClick={handleAddToCart}
                   disabled={!selectedSize}
                   className={`px-8 py-3 rounded-xl font-bold flex items-center gap-2 transition-all ${selectedSize
-                    ? 'bg-black text-white hover:bg-emerald-600 shadow-lg transform active:scale-95'
-                    : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                    ? 'bg-black dark:bg-white text-white dark:text-gray-900 hover:bg-emerald-600 dark:hover:bg-emerald-400 shadow-lg transform active:scale-95'
+                    : 'bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed'
                     }`}
                 >
                   Add to Cart

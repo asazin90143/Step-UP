@@ -20,35 +20,35 @@ export default function CartPage() {
 
     if (items.length === 0) {
         return (
-            <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
-                <h2 className="text-2xl font-bold text-gray-800 mb-4">Your cart is empty</h2>
+            <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 dark:bg-gray-950 transition-colors duration-300">
+                <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4">Your cart is empty</h2>
                 <Link href="/" className="text-emerald-600 hover:underline">Continue Shopping</Link>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 p-8">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-8 transition-colors duration-300">
             <div className="container mx-auto max-w-4xl">
-                <h1 className="text-3xl font-bold mb-8 text-gray-900">Shopping Cart</h1>
+                <h1 className="text-3xl font-bold mb-8 text-gray-900 dark:text-white">Shopping Cart</h1>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     {/* Cart Items List */}
                     <div className="lg:col-span-2 space-y-4">
                         {items.map((item) => (
-                            <div key={item.id} className="bg-white p-4 rounded-lg shadow-sm flex items-center gap-4">
-                                <img src={item.image} alt={item.name} className="w-20 h-20 object-cover rounded-md bg-gray-100" />
+                            <div key={item.id} className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm flex items-center gap-4 dark:border dark:border-gray-700">
+                                <img src={item.image} alt={item.name} className="w-20 h-20 object-cover rounded-md bg-gray-100 dark:bg-gray-700" />
                                 <div className="flex-grow">
-                                    <h3 className="font-bold text-gray-800">{item.name}</h3>
-                                    <p className="text-sm text-gray-500">{item.category}</p>
-                                    <p className="font-bold text-emerald-600">${item.price}</p>
+                                    <h3 className="font-bold text-gray-800 dark:text-gray-100">{item.name}</h3>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">{item.category}</p>
+                                    <p className="font-bold text-emerald-600 dark:text-emerald-400">${item.price}</p>
                                 </div>
                                 <div className="flex items-center gap-3">
-                                    <button onClick={() => updateQuantity(item.id, item.size, -1)} className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold">-</button>
-                                    <span className="font-medium text-gray-900">{item.quantity}</span>
-                                    <button onClick={() => updateQuantity(item.id, item.size, 1)} className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold">+</button>
+                                    <button onClick={() => updateQuantity(item.id, item.size, -1)} className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-300 font-bold">-</button>
+                                    <span className="font-medium text-gray-900 dark:text-gray-100">{item.quantity}</span>
+                                    <button onClick={() => updateQuantity(item.id, item.size, 1)} className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-300 font-bold">+</button>
                                 </div>
-                                <button onClick={() => removeFromCart(item.id, item.size)} className="text-red-500 hover:text-red-700 ml-4">
+                                <button onClick={() => removeFromCart(item.id, item.size)} className="text-red-500 hover:text-red-700 dark:hover:text-red-400 ml-4">
                                     ✕
                                 </button>
                             </div>
@@ -56,7 +56,7 @@ export default function CartPage() {
                     </div>
 
                     {/* Checkout Summary */}
-                    <div className="bg-white p-6 rounded-lg shadow-sm h-fit text-gray-900">
+                    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm h-fit text-gray-900 dark:text-gray-100 dark:border dark:border-gray-700">
                         <h2 className="text-xl font-bold mb-4">Order Summary</h2>
                         <div className="flex justify-between mb-2">
                             <span>Subtotal</span>
@@ -74,7 +74,7 @@ export default function CartPage() {
                         <button
                             onClick={handleCheckout}
                             disabled={isProcessing}
-                            className="w-full bg-black text-white py-3 rounded-lg font-bold hover:bg-emerald-600 transition disabled:bg-gray-400 disabled:cursor-not-allowed flex justify-center items-center"
+                            className="w-full bg-black dark:bg-emerald-600 text-white py-3 rounded-lg font-bold hover:bg-emerald-600 dark:hover:bg-emerald-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed flex justify-center items-center"
                         >
                             {isProcessing ? (
                                 <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>

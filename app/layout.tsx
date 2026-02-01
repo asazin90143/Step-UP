@@ -11,6 +11,8 @@ export const metadata: Metadata = {
   description: 'Premium kicks without the heels.',
 };
 
+import { ThemeProvider } from '@/context/ThemeContext';
+
 export default function RootLayout({
   children,
 }: {
@@ -19,10 +21,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <CartProvider>
-          <Navbar />
-          {children}
-        </CartProvider>
+        <ThemeProvider>
+          <CartProvider>
+            <Navbar />
+            {children}
+          </CartProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
