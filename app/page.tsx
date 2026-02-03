@@ -128,7 +128,7 @@ export default function Home() {
                 <div className="relative z-10 flex justify-center">
                   <div className="w-72 h-72 md:w-80 md:h-80 rounded-full bg-gradient-to-br from-gray-800 to-gray-900 border border-white/10 shadow-2xl overflow-hidden flex items-center justify-center hover:scale-105 transition-transform duration-500">
                     <img
-                      src={shoes.find(s => s.name === 'Air Pulse')?.image || '/shoes/sneakers/image288.jpg'}
+                      src={shoes.find(s => s.name === 'Air Pulse')?.image || (process.env.NEXT_PUBLIC_BASE_PATH || '') + '/shoes/sneakers/image288.jpg'}
                       alt="Featured Shoe"
                       className="w-full h-full object-cover object-center"
                     />
@@ -139,7 +139,7 @@ export default function Home() {
                 <div className="absolute -top-4 -right-4 md:top-4 md:right-0 bg-white/10 backdrop-blur-md rounded-2xl p-3 border border-white/20 shadow-xl animate-bounce" style={{ animationDuration: '3s' }}>
                   <div className="flex items-center gap-2">
                     <div className="w-10 h-10 rounded-lg overflow-hidden">
-                      <img src={shoes[50]?.image || '/shoes/boots/image260.jpg'} alt="" className="w-full h-full object-cover" />
+                      <img src={shoes[50]?.image || (process.env.NEXT_PUBLIC_BASE_PATH || '') + '/shoes/boots/image260.jpg'} alt="" className="w-full h-full object-cover" />
                     </div>
                     <div>
                       <p className="text-xs text-gray-300">Just sold!</p>
