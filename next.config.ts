@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
 
-const isProd = process.env.NODE_ENV === 'production';
+// Force paths to match GitHub Pages structure in both Dev and Prod
 const repoName = 'Step-UP';
 
 const nextConfig: NextConfig = {
@@ -8,10 +8,11 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  basePath: isProd ? `/${repoName}` : '',
-  assetPrefix: isProd ? `/${repoName}/` : '',
+  // Always use the repository name as the base path
+  basePath: `/${repoName}`,
+  assetPrefix: `/${repoName}/`,
   env: {
-    NEXT_PUBLIC_BASE_PATH: isProd ? `/${repoName}` : '',
+    NEXT_PUBLIC_BASE_PATH: `/${repoName}`,
   },
   reactCompiler: true,
 };
