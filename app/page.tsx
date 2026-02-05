@@ -11,6 +11,7 @@ export default function Home() {
   const [selectedShoe, setSelectedShoe] = useState<Shoe | null>(null);
   const [selectedSize, setSelectedSize] = useState<string | number | null>(null);
   const [visibleCount, setVisibleCount] = useState(20);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const handleSeeMore = () => {
     setVisibleCount((prev) => prev + 20);
@@ -19,9 +20,15 @@ export default function Home() {
   const categories = ['All', ...[...new Set(shoes.map((shoe) => shoe.category))].sort()];
   const sizes = [7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 12, 13];
 
-  const filteredShoes = selectedCategory === 'All'
+  let filteredShoes = selectedCategory === 'All'
     ? [...shoes].sort((a, b) => a.name.localeCompare(b.name))
     : shoes.filter((shoe) => shoe.category === selectedCategory);
+
+  if (searchQuery) {
+    filteredShoes = filteredShoes.filter(shoe =>
+      shoe.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }
 
   const handleScrollToShop = () => {
     const shopSection = document.getElementById('shop');
@@ -197,10 +204,26 @@ export default function Home() {
       {/* Shop Section */}
       <section id="shop" className="py-20 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-8">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-8 gap-4">
             <div>
               <span className="text-emerald-600 font-bold uppercase tracking-wider text-sm">Our Collection</span>
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-2">Latest Arrivals</h2>
+            </div>
+            {/* Search Bar */}
+            <div className="relative w-full md:w-64">
+              <input
+                type="text"
+                placeholder="Search shoes..."
+                value={searchQuery}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  setVisibleCount(20); // Reset visible count on search
+                }}
+                className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:border-emerald-500 dark:focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-colors"
+              />
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
             </div>
           </div>
 
