@@ -10,10 +10,10 @@ export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedShoe, setSelectedShoe] = useState<Shoe | null>(null);
   const [selectedSize, setSelectedSize] = useState<string | number | null>(null);
-  const [visibleCount, setVisibleCount] = useState(8);
+  const [visibleCount, setVisibleCount] = useState(20);
 
   const handleSeeMore = () => {
-    setVisibleCount((prev) => prev + 8);
+    setVisibleCount((prev) => prev + 20);
   };
 
   const categories = ['All', ...[...new Set(shoes.map((shoe) => shoe.category))].sort()];
@@ -211,7 +211,7 @@ export default function Home() {
                 key={cat}
                 onClick={() => {
                   setSelectedCategory(cat);
-                  setVisibleCount(8);
+                  setVisibleCount(20);
                 }}
                 className={`px-5 py-2 rounded-full text-sm font-bold transition-all ${selectedCategory === cat
                   ? 'bg-emerald-600 text-white shadow-md transform scale-105'
