@@ -10,6 +10,11 @@ export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedShoe, setSelectedShoe] = useState<Shoe | null>(null);
   const [selectedSize, setSelectedSize] = useState<string | number | null>(null);
+  const [visibleCount, setVisibleCount] = useState(8);
+
+  const handleSeeMore = () => {
+    setVisibleCount((prev) => prev + 8);
+  };
 
   const categories = ['All', ...[...new Set(shoes.map((shoe) => shoe.category))].sort()];
   const sizes = [7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 12, 13];
@@ -204,7 +209,10 @@ export default function Home() {
             {categories.map((cat) => (
               <button
                 key={cat}
-                onClick={() => setSelectedCategory(cat)}
+                onClick={() => {
+                  setSelectedCategory(cat);
+                  setVisibleCount(8);
+                }}
                 className={`px-5 py-2 rounded-full text-sm font-bold transition-all ${selectedCategory === cat
                   ? 'bg-emerald-600 text-white shadow-md transform scale-105'
                   : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:border-gray-300'
@@ -215,8 +223,8 @@ export default function Home() {
             ))}
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {filteredShoes.map((shoe) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+            {filteredShoes.slice(0, visibleCount).map((shoe) => (
               <div key={shoe.id} className="group bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 dark:border-gray-700 flex flex-col">
                 <div className="h-64 bg-gray-100 dark:bg-gray-700 relative overflow-hidden">
                   <div className="absolute top-3 right-3 z-10">
@@ -261,6 +269,17 @@ export default function Home() {
               </div>
             ))}
           </div>
+
+          {visibleCount < filteredShoes.length && (
+            <div className="text-center">
+              <button
+                onClick={handleSeeMore}
+                className="px-8 py-3 bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-full font-bold transition shadow-sm hover:shadow-md"
+              >
+                See More Products ({filteredShoes.length - visibleCount} remaining)
+              </button>
+            </div>
+          )}
         </div>
       </section>
 
