@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { shoes } from '@/lib/data';
 import { useCart } from '@/context/CartContext';
 import { Shoe } from '@/types';
@@ -13,6 +13,30 @@ export default function Home() {
   const [visibleCount, setVisibleCount] = useState(20);
   const [searchQuery, setSearchQuery] = useState('');
   const [sortOption, setSortOption] = useState<'name' | 'priceLow' | 'priceHigh'>('name');
+  const [favorites, setFavorites] = useState<string[]>([]);
+  const [isClient, setIsClient] = useState(false); // To handle hydration mismatch
+
+  // Load favorites on mount
+  useEffect(() => {
+    setIsClient(true);
+    const saved = localStorage.getItem('favorites');
+    if (saved) {
+      setFavorites(JSON.parse(saved));
+    }
+  }, []);
+
+  const toggleFavorite = (e: React.MouseEvent, id: string) => {
+    e.stopPropagation();
+    e.preventDefault();
+    let newFavs;
+    if (favorites.includes(id)) {
+      newFavs = favorites.filter(favId => favId !== id);
+    } else {
+      newFavs = [...favorites, id];
+    }
+    setFavorites(newFavs);
+    localStorage.setItem('favorites', JSON.stringify(newFavs));
+  };
 
   const handleSeeMore = () => {
     setVisibleCount((prev) => prev + 20);
@@ -283,6 +307,23 @@ export default function Home() {
                     alt={shoe.name}
                     className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
                   />
+                  {/* Favorite Button */}
+                  <button
+                    onClick={(e) => toggleFavorite(e, shoe.id)}
+                    className="absolute top-3 left-3 z-10 w-8 h-8 rounded-full bg-white/90 backdrop-blur shadow-sm flex items-center justify-center hover:scale-110 transition-transform"
+                    aria-label="Add to favorites"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className={`h-5 w-5 transition-colors ${isClient && favorites.includes(shoe.id) ? 'fill-red-500 text-red-500' : 'text-gray-400 hover:text-red-500'}`}
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={isClient && favorites.includes(shoe.id) ? 0 : 2}
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    </svg>
+                  </button>
                   {/* Quick add overlay */}
                   <div className="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-gradient-to-t from-black/50 to-transparent flex justify-center">
                     <button
