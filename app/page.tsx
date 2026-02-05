@@ -12,6 +12,7 @@ export default function Home() {
   const [selectedSize, setSelectedSize] = useState<string | number | null>(null);
   const [visibleCount, setVisibleCount] = useState(20);
   const [searchQuery, setSearchQuery] = useState('');
+  const [sortOption, setSortOption] = useState<'name' | 'priceLow' | 'priceHigh'>('name');
 
   const handleSeeMore = () => {
     setVisibleCount((prev) => prev + 20);
@@ -21,8 +22,15 @@ export default function Home() {
   const sizes = [7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 12, 13];
 
   let filteredShoes = selectedCategory === 'All'
-    ? [...shoes].sort((a, b) => a.name.localeCompare(b.name))
+    ? [...shoes]
     : shoes.filter((shoe) => shoe.category === selectedCategory);
+
+  // Apply Sorting
+  filteredShoes.sort((a, b) => {
+    if (sortOption === 'priceLow') return a.price - b.price;
+    if (sortOption === 'priceHigh') return b.price - a.price;
+    return a.name.localeCompare(b.name); // Default: Name A-Z
+  });
 
   if (searchQuery) {
     filteredShoes = filteredShoes.filter(shoe =>
@@ -209,21 +217,36 @@ export default function Home() {
               <span className="text-emerald-600 font-bold uppercase tracking-wider text-sm">Our Collection</span>
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-2">Latest Arrivals</h2>
             </div>
-            {/* Search Bar */}
-            <div className="relative w-full md:w-64">
-              <input
-                type="text"
-                placeholder="Search shoes..."
-                value={searchQuery}
-                onChange={(e) => {
-                  setSearchQuery(e.target.value);
-                  setVisibleCount(20); // Reset visible count on search
-                }}
-                className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:border-emerald-500 dark:focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-colors"
-              />
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
+            {/* Search and Sort */}
+            <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+              {/* Sort Dropdown */}
+              <select
+                value={sortOption}
+                onChange={(e) => setSortOption(e.target.value as any)}
+                className="pl-4 pr-8 py-2 rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:border-emerald-500 dark:focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-colors appearance-none cursor-pointer"
+                style={{ backgroundImage: 'url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%239CA3AF%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 0.7rem top 50%', backgroundSize: '0.65rem auto' }}
+              >
+                <option value="name">Name (A-Z)</option>
+                <option value="priceLow">Price: Low to High</option>
+                <option value="priceHigh">Price: High to Low</option>
+              </select>
+
+              {/* Search Bar */}
+              <div className="relative w-full sm:w-64">
+                <input
+                  type="text"
+                  placeholder="Search shoes..."
+                  value={searchQuery}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
+                    setVisibleCount(20); // Reset visible count on search
+                  }}
+                  className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:border-emerald-500 dark:focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-colors"
+                />
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
             </div>
           </div>
 
