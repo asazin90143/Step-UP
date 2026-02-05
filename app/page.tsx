@@ -4,9 +4,11 @@ import { shoes } from '@/lib/data';
 import { useCart } from '@/context/CartContext';
 import { Shoe } from '@/types';
 import Link from 'next/link';
+import { useToast } from '@/context/ToastContext';
 
 export default function Home() {
   const { addToCart } = useCart();
+  const { showToast } = useToast();
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedShoe, setSelectedShoe] = useState<Shoe | null>(null);
   const [selectedSize, setSelectedSize] = useState<string | number | null>(null);
@@ -77,6 +79,7 @@ export default function Home() {
   const handleAddToCart = () => {
     if (selectedShoe && selectedSize) {
       addToCart(selectedShoe, selectedSize);
+      showToast(`${selectedShoe.name} added to cart!`, 'success');
       setSelectedShoe(null);
       setSelectedSize(null);
     }

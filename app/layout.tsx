@@ -13,6 +13,8 @@ export const metadata: Metadata = {
 
 import { ThemeProvider } from '@/context/ThemeContext';
 
+import { ToastProvider } from '@/context/ToastContext';
+
 export default function RootLayout({
   children,
 }: {
@@ -22,10 +24,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ThemeProvider>
-          <CartProvider>
-            <Navbar />
-            {children}
-          </CartProvider>
+          <ToastProvider>
+            <CartProvider>
+              <Navbar />
+              {children}
+            </CartProvider>
+          </ToastProvider>
         </ThemeProvider>
       </body>
     </html>
